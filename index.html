@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#162d2b">
+  <title>Cartera | EduGest</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <section class="auth-page" id="auth-view" aria-labelledby="auth-title">
+    <div class="auth-intro">
+      <a class="wordmark" href="/" aria-label="EduGest, inicio"><span class="brand-symbol">E</span> EduGest</a>
+      <div class="auth-copy">
+        <p class="eyebrow">CONTROL DE CARTERA</p>
+        <h1>Tu operación,<br>en orden.</h1>
+        <p>Clientes, créditos y pagos en un solo lugar.</p>
+      </div>
+      <p class="auth-foot">Gestión financiera clara y segura.</p>
+    </div>
+    <div class="auth-form-wrap">
+      <div class="auth-form-box">
+        <p class="eyebrow">BIENVENIDO</p>
+        <h2 id="auth-title">Accede a tu cuenta</h2>
+        <p class="form-lead">Ingresa tus datos para continuar.</p>
+        <div class="auth-tabs" role="tablist" aria-label="Acceso a la plataforma">
+          <button class="auth-tab is-active" id="login-tab" type="button" role="tab" aria-selected="true" data-auth-tab="login">Iniciar sesión</button>
+          <button class="auth-tab" id="register-tab" type="button" role="tab" aria-selected="false" data-auth-tab="register">Crear cuenta</button>
+        </div>
+        <form id="login-form" class="form-stack">
+          <label class="field"><span>Correo electrónico</span><input name="email" type="email" autocomplete="username" placeholder="nombre@correo.com" required></label>
+          <label class="field"><span>Contraseña</span><input name="password" type="password" autocomplete="current-password" placeholder="Mínimo 8 caracteres" required></label>
+          <button class="button button-primary button-wide" type="submit">Ingresar <span aria-hidden="true">→</span></button>
+        </form>
+        <form id="register-form" class="form-stack" hidden>
+          <label class="field"><span>Nombre completo</span><input name="name" type="text" autocomplete="name" minlength="3" required></label>
+          <label class="field"><span>Correo electrónico</span><input name="email" type="email" autocomplete="email" required></label>
+          <label class="field"><span>Contraseña</span><input name="password" type="password" autocomplete="new-password" minlength="8" required></label>
+          <button class="button button-primary button-wide" type="submit">Crear cuenta <span aria-hidden="true">→</span></button>
+        </form>
+        <p class="auth-message" id="auth-message" role="status" aria-live="polite"></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="workspace" id="workspace" hidden>
+    <aside class="sidebar">
+      <a class="wordmark sidebar-brand" href="#inicio"><span class="brand-symbol">E</span> EduGest</a>
+      <p class="nav-caption">GESTIÓN</p>
+      <nav class="main-nav" aria-label="Navegación principal">
+        <button class="nav-link is-active" type="button" data-view="overview"><span class="nav-icon">◫</span>Resumen</button>
+        <button class="nav-link" type="button" data-view="customers"><span class="nav-icon">♙</span>Clientes</button>
+        <button class="nav-link" type="button" data-view="loans"><span class="nav-icon">▤</span>Préstamos</button>
+        <button class="nav-link" type="button" data-view="payments"><span class="nav-icon">↙</span>Pagos</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <span class="database-status"><span class="status-dot"></span> Base de datos conectada</span>
+        <button class="logout-button" id="logout-button" type="button"><span aria-hidden="true">↪</span> Cerrar sesión</button>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div><p class="eyebrow" id="page-kicker">VISTA GENERAL</p><h1 id="page-title">Resumen</h1></div>
+        <div class="account-chip"><span class="account-avatar" id="account-avatar">E</span><span id="account-name">Usuario</span></div>
+      </header>
+
+      <section class="view-panel" data-screen="overview">
+        <div class="welcome-band">
+          <div><p class="eyebrow">PANEL DE CARTERA</p><h2>Una mirada clara a tu operación.</h2><p>Consulta saldos, clientes y actividad reciente.</p></div>
+          <span class="welcome-mark" aria-hidden="true">E</span>
+        </div>
+        <div class="metric-grid" aria-label="Indicadores de cartera">
+          <article class="metric"><span class="metric-label">Clientes registrados</span><strong id="metric-customers">0</strong><span class="metric-note">En tu cartera</span></article>
+          <article class="metric"><span class="metric-label">Préstamos activos</span><strong id="metric-active">0</strong><span class="metric-note">Créditos vigentes</span></article>
+          <article class="metric metric-highlight"><span class="metric-label">Saldo por cobrar</span><strong id="metric-balance">$0</strong><span class="metric-note">Capital pendiente</span></article>
+          <article class="metric"><span class="metric-label">Pagos recibidos</span><strong id="metric-paid">$0</strong><span class="metric-note">Total registrado</span></article>
+        </div>
+        <div class="content-heading"><div><p class="eyebrow">SEGUIMIENTO</p><h2>Préstamos recientes</h2></div><button class="text-button" type="button" data-go="loans">Ver préstamos <span aria-hidden="true">→</span></button></div>
+        <div class="table-wrap"><table><thead><tr><th>CLIENTE</th><th>MONTO INICIAL</th><th>CUOTA MENSUAL</th><th>SALDO</th><th>ESTADO</th></tr></thead><tbody id="overview-loans"><tr><td class="table-empty" colspan="5">Todavía no hay préstamos registrados.</td></tr></tbody></table></div>
+      </section>
+
+      <section class="view-panel" data-screen="customers" hidden>
+        <div class="content-heading page-heading"><div><p class="eyebrow">DIRECTORIO</p><h2>Clientes</h2><p class="section-subtitle">Información de las personas de tu cartera.</p></div><button class="button button-primary" type="button" data-open-form="customer-form">+ Registrar cliente</button></div>
+        <form class="entry-form" id="customer-form" hidden>
+          <div class="form-title"><div><p class="eyebrow">NUEVO REGISTRO</p><h3>Datos del cliente</h3></div><button class="icon-close" type="button" data-close-form="customer-form" aria-label="Cerrar formulario">×</button></div>
+          <div class="form-grid">
+            <label class="field"><span>Nombre completo *</span><input name="name" maxlength="120" required></label>
+            <label class="field"><span>Documento *</span><input name="document" maxlength="40" required></label>
+            <label class="field"><span>Teléfono</span><input name="phone" type="tel" maxlength="40"></label>
+            <label class="field"><span>Correo</span><input name="email" type="email" maxlength="160"></label>
+            <label class="field field-full"><span>Dirección</span><input name="address" maxlength="240"></label>
+          </div>
+          <div class="form-actions"><button class="button button-quiet" type="button" data-close-form="customer-form">Cancelar</button><button class="button button-primary" type="submit">Guardar cliente</button></div>
+        </form>
+        <div class="table-wrap"><table><thead><tr><th>CLIENTE</th><th>DOCUMENTO</th><th>TELÉFONO</th><th>CORREO</th><th></th></tr></thead><tbody id="customers-table"><tr><td class="table-empty" colspan="5">No hay clientes registrados.</td></tr></tbody></table></div>
+      </section>
+
+      <section class="view-panel" data-screen="loans" hidden>
+        <div class="content-heading page-heading"><div><p class="eyebrow">CRÉDITOS</p><h2>Préstamos</h2><p class="section-subtitle">Calcula cuotas fijas y consulta el saldo pendiente.</p></div><button class="button button-primary" type="button" data-open-form="loan-form">+ Registrar préstamo</button></div>
+        <form class="entry-form" id="loan-form" hidden>
+          <div class="form-title"><div><p class="eyebrow">NUEVO CRÉDITO</p><h3>Condiciones del préstamo</h3></div><button class="icon-close" type="button" data-close-form="loan-form" aria-label="Cerrar formulario">×</button></div>
+          <div class="form-grid">
+            <label class="field field-full"><span>Cliente *</span><select name="customerId" id="loan-customer" required><option value="">Selecciona un cliente</option></select></label>
+            <label class="field"><span>Monto del préstamo *</span><input name="principal" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+            <label class="field"><span>Tasa anual (%) *</span><input name="annualRate" type="number" min="0" max="100" step="0.01" placeholder="0.00" required></label>
+            <label class="field"><span>Plazo (meses) *</span><input name="termMonths" type="number" min="1" max="600" step="1" placeholder="12" required></label>
+            <label class="field"><span>Fecha de inicio *</span><input name="startDate" type="date" required></label>
+          </div>
+          <p class="loan-estimate" id="loan-estimate">Ingresa monto, tasa y plazo para estimar la cuota mensual.</p>
+          <div class="form-actions"><button class="button button-quiet" type="button" data-close-form="loan-form">Cancelar</button><button class="button button-primary" type="submit">Guardar préstamo</button></div>
+        </form>
+        <div class="table-wrap"><table><thead><tr><th>CLIENTE</th><th>MONTO</th><th>TASA ANUAL</th><th>PLAZO</th><th>CUOTA MENSUAL</th><th>SALDO</th><th>ESTADO</th></tr></thead><tbody id="loans-table"><tr><td class="table-empty" colspan="7">No hay préstamos registrados.</td></tr></tbody></table></div>
+      </section>
+
+      <section class="view-panel" data-screen="payments" hidden>
+        <div class="content-heading page-heading"><div><p class="eyebrow">MOVIMIENTOS</p><h2>Pagos</h2><p class="section-subtitle">Cada abono se descuenta del saldo del préstamo.</p></div><button class="button button-primary" type="button" data-open-form="payment-form">+ Registrar pago</button></div>
+        <form class="entry-form" id="payment-form" hidden>
+          <div class="form-title"><div><p class="eyebrow">NUEVO MOVIMIENTO</p><h3>Registrar abono</h3></div><button class="icon-close" type="button" data-close-form="payment-form" aria-label="Cerrar formulario">×</button></div>
+          <div class="form-grid">
+            <label class="field field-full"><span>Préstamo *</span><select name="loanId" id="payment-loan" required><option value="">Selecciona un préstamo activo</option></select></label>
+            <label class="field"><span>Valor recibido *</span><input name="amount" type="number" min="0.01" step="0.01" placeholder="0.00" required></label>
+            <label class="field"><span>Fecha del pago *</span><input name="paidAt" type="date" required></label>
+            <label class="field field-full"><span>Nota</span><input name="note" maxlength="240" placeholder="Referencia o comentario opcional"></label>
+          </div>
+          <div class="form-actions"><button class="button button-quiet" type="button" data-close-form="payment-form">Cancelar</button><button class="button button-primary" type="submit">Guardar pago</button></div>
+        </form>
+        <div class="table-wrap"><table><thead><tr><th>FECHA</th><th>CLIENTE</th><th>PRÉSTAMO</th><th>VALOR RECIBIDO</th><th>NOTA</th></tr></thead><tbody id="payments-table"><tr><td class="table-empty" colspan="5">No hay pagos registrados.</td></tr></tbody></table></div>
+      </section>
+      <footer class="page-footer">EduGest <span>·</span> Los datos se almacenan en tu base de datos MongoDB.</footer>
+    </main>
+  </div>
+  <div class="toast-region" id="toast-region" aria-live="polite" aria-atomic="true"></div>
+</body>
+</html>
